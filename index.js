@@ -44,6 +44,19 @@ app.get('/form', function(req, res) {
 });
 
 
+app.post('/login', function (req, res) {
+  if (req.body.username == "ssd" && req.body.password == "ssd123") {
+    res.cookie('username', req.body.username);
+    res.cookie('CSRF-TOKEN', makeToken(30));
+    res.redirect('form');
+  } else {
+    res.render('views/index', {
+      msg: 'Invalid credentials! Please use default username and password.',
+      className: 'message-fail'
+    });
+  }
+})
+
 
 app.listen(PORT, () => {
   console.log(`Listening on http://localhost:${PORT}`);
