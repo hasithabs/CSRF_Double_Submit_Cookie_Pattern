@@ -57,6 +57,22 @@ app.post('/login', function (req, res) {
   }
 })
 
+app.post('/formsubmit', function(req, res) {
+  if ((!!req.body._csrf.trim()) && req.cookies['CSRF-TOKEN'] == req.body._csrf) {
+    res.render('views/message', {
+      msgTxt: 'Your contact information has been successfully added!',
+      reason: 'CSRF token is valid!',
+      className: 'success'
+    });
+  } else {
+    res.render('views/message', {
+      msgTxt: 'Your contact information is invalid.',
+      reason: 'Valid CSRF token required!',
+      className: 'fail'
+    });
+  }
+})
+
 
 app.listen(PORT, () => {
   console.log(`Listening on http://localhost:${PORT}`);
