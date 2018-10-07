@@ -1,4 +1,5 @@
 const express = require('express');
+const session = require('express-session')
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const path = require('path');
@@ -12,6 +13,14 @@ app.set('views', path.join(__dirname, '/public'));
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public/assets'));
 
+app.use(session({
+  name: 'sessionID',
+  secret: 'SLIITSSDKt2HA454tYPW',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false, httpOnly: true }
+}))
+// Change cookie: { secure: true, httpOnly: true } when deploying to Production environment
 
 app.use(bodyParser.urlencoded({
   extended: true
